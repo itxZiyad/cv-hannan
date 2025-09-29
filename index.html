@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Abdul Hannan - Premium Portfolio</title>
+
+    <!-- Theme initialization will be handled by script.js -->
+    <script>
+      // Simple initialization to prevent FOUC
+      (function() {
+        document.documentElement.style.visibility = 'hidden';
+        document.addEventListener('DOMContentLoaded', function() {
+          setTimeout(function() {
+            document.documentElement.style.visibility = 'visible';
+          }, 10);
+        });
+      })();
+    </script>
+    <style>
+      /* Smooth transitions for theme changes */
+      html {
+        visibility: hidden;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      
+      /* Ensure background is set before content loads */
+      body {
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+      }
+    </style>
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+
+    <!-- Lottie -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+    <!-- Swiper (Sliders/Carousels) -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
+    <!-- Three.js for WebGL particles -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body
+    class="font-inter bg-white dark:bg-gray-900 text-gray-900 dark:text-white overflow-x-hidden"
+  >
+    <!-- Preloader -->
+    <div
+      id="preloader"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-gray-900"
+    >
+      <div class="preloader-content">
+        <div class="preloader-logo">
+          <span class="preloader-text">AH</span>
+          <div class="preloader-glow"></div>
+        </div>
+        <div class="preloader-progress">
+          <div class="preloader-bar"></div>
+        </div>
+        <p class="preloader-text-small">Loading Portfolio...</p>
+      </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div
+      id="cursor"
+      class="fixed w-6 h-6 bg-blue-500 rounded-full pointer-events-none z-50 mix-blend-difference transition-all duration-300"
+    ></div>
+    <div
+      id="cursor-trail"
+      class="fixed w-12 h-12 bg-blue-500/20 rounded-full pointer-events-none z-40 transition-all duration-500"
+    ></div>
+    <div
+      id="cursor-magnetic"
+      class="fixed w-20 h-20 bg-blue-500/10 rounded-full pointer-events-none z-30 transition-all duration-700"
+    ></div>
+
+    <!-- Scroll Progress Bar -->
+    <div
+      id="scroll-progress"
+      class="fixed top-0 left-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 z-50 transition-all duration-300"
+    ></div>
+
+    <!-- Navigation -->
+    <nav
+      id="navbar"
+      class="fixed top-0 w-full z-40 transition-all duration-500"
+    >
+      <div class="nav-container">
+        <div class="nav-content">
+          <div class="nav-logo">
+            <span class="logo-text">Abdul Hannan</span>
+          </div>
+
+          <div class="nav-links">
+            <a href="#home" class="nav-link active" data-section="home">
+              <span class="nav-link-text">Home</span>
+              <div class="nav-link-underline"></div>
+            </a>
+            <a href="#about" class="nav-link" data-section="about">
+              <span class="nav-link-text">About</span>
+              <div class="nav-link-underline"></div>
+            </a>
+            <a href="#skills" class="nav-link" data-section="skills">
+              <span class="nav-link-text">Skills</span>
+              <div class="nav-link-underline"></div>
+            </a>
+            <a href="#experience" class="nav-link" data-section="experience">
+              <span class="nav-link-text">Experience</span>
+              <div class="nav-link-underline"></div>
+            </a>
+            <a href="#projects" class="nav-link" data-section="projects">
+              <span class="nav-link-text">Projects</span>
+              <div class="nav-link-underline"></div>
+            </a>
+            <a href="#certificates" class="nav-link" data-section="certificates">
+              <span class="nav-link-text">Certificates</span>
+              <div class="nav-link-underline"></div>
+            </a>
+            <a href="#contact" class="nav-link" data-section="contact">
+              <span class="nav-link-text">Contact</span>
+              <div class="nav-link-underline"></div>
+            </a>
+          </div>
+
+          <div class="nav-actions">
+            <button id="theme-toggle" class="theme-toggle">
+              <div class="theme-icon">
+                <i class="fas fa-sun theme-sun"></i>
+                <i class="fas fa-moon theme-moon"></i>
+              </div>
+            </button>
+
+            <button class="mobile-menu-toggle md:hidden">
+              <span class="hamburger-line"></span>
+              <span class="hamburger-line"></span>
+              <span class="hamburger-line"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section
+      id="home"
+      class="min-h-screen flex items-center justify-center relative overflow-hidden"
+    >
+      <!-- WebGL Particle Background -->
+      <canvas
+        id="particle-canvas"
+        class="absolute inset-0 w-full h-full"
+      ></canvas>
+
+      <!-- Gradient Overlay -->
+      <div class="hero-gradient"></div>
+
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1 class="hero-title">
+            <span class="hero-name">Abdul Hannan</span>
+          </h1>
+
+          <div class="hero-subtitle">
+            <span id="typing-text" class="typing-text"></span>
+            <span class="typing-cursor">|</span>
+          </div>
+
+          <div class="hero-description">
+            <p>
+              A motivated and tech-driven BSCS student with expertise in AI,
+              Data Analytics, Frontend Development, and Digital Marketing.
+            </p>
+          </div>
+
+          <div class="hero-actions">
+            <button class="btn-primary magnetic-btn">
+              <span class="btn-text">Get In Touch</span>
+              <div class="btn-ripple"></div>
+            </button>
+            <button class="btn-secondary magnetic-btn">
+              <span class="btn-text">View Work</span>
+              <div class="btn-ripple"></div>
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-image">
+          <div class="profile-container">
+            <div class="profile-glow"></div>
+            <div class="profile-ring"></div>
+            <div class="profile-image">
+              <img
+                src="images/profile.jpg"
+                alt="Abdul Hannan"
+                class="profile-img"
+                onerror="this.src='https://via.placeholder.com/300x300/3B82F6/FFFFFF?text=AH'"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll Indicator -->
+      <div class="scroll-indicator">
+        <div class="scroll-arrow">
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="scroll-text">Scroll to explore</div>
+      </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements" class="py-32">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Achievements & Highlights</h2>
+          <div class="section-subtitle">Proud moments and certifications</div>
+        </div>
+
+        <!-- Counters -->
+        <div class="grid md:grid-cols-3 gap-8 mb-16">
+          <div class="achievement-card text-center">
+            <div
+              class="w-20 h-20 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 mx-auto mb-4 flex items-center justify-center glow-circle"
+            >
+              <i class="fas fa-users text-3xl text-white"></i>
+            </div>
+            <div
+              class="text-4xl font-extrabold text-blue-600 dark:text-blue-400 counter"
+              data-target="370"
+            >
+              0
+            </div>
+            <div class="text-gray-600 dark:text-gray-300">Students Trained</div>
+          </div>
+
+          <div class="achievement-card text-center">
+            <div
+              class="w-20 h-20 rounded-full bg-gradient-to-r from-purple-500 to-purple-600 mx-auto mb-4 flex items-center justify-center glow-circle"
+            >
+              <i class="fas fa-brain text-3xl text-white"></i>
+            </div>
+            <div
+              class="text-4xl font-extrabold text-purple-600 dark:text-purple-400 counter"
+              data-target="5"
+            >
+              0
+            </div>
+            <div class="text-gray-600 dark:text-gray-300">AI Projects</div>
+          </div>
+
+          <div class="achievement-card text-center">
+            <div
+              class="w-20 h-20 rounded-full bg-gradient-to-r from-green-500 to-green-600 mx-auto mb-4 flex items-center justify-center glow-circle"
+            >
+              <i class="fas fa-briefcase text-3xl text-white"></i>
+            </div>
+            <div
+              class="text-4xl font-extrabold text-green-600 dark:text-green-400 counter"
+              data-target="3"
+            >
+              0
+            </div>
+            <div class="text-gray-600 dark:text-gray-300">Internships</div>
+          </div>
+        </div>
+
+        <!-- Certificates Slider -->
+        <h3 class="text-xl font-semibold mb-6 text-center">Certificates</h3>
+        <div class="swiper certs-swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide cert-card">Cisco Certification</div>
+            <div class="swiper-slide cert-card">Google Certification</div>
+            <div class="swiper-slide cert-card">Coursera Certification</div>
+            <div class="swiper-slide cert-card">Corvit Systems</div>
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-32 relative">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">About Me</h2>
+          <div class="section-subtitle">Get to know me better</div>
+        </div>
+
+        <div class="about-content">
+          <div class="about-image">
+            <div class="morphing-blob">
+              <div class="blob blob-1"></div>
+              <div class="blob blob-2"></div>
+              <div class="blob blob-3"></div>
+              <div class="profile-image">
+                <img
+                  src="images/profile.jpg"
+                  alt="Abdul Hannan"
+                  class="profile-img"
+                  onerror="this.src='https://via.placeholder.com/300x300/3B82F6/FFFFFF?text=AH'"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="about-text">
+            <div class="text-card">
+              <h3 class="card-title">Who I Am</h3>
+              <p class="card-text">
+                A passionate BSCS student at Virtual University with strong
+                interests in Artificial Intelligence, Data Analytics, Frontend
+                Development, and Social Media Marketing.
+              </p>
+            </div>
+
+            <div class="text-card">
+              <h3 class="card-title">What I Do</h3>
+              <p class="card-text">
+                I specialize in creating innovative solutions that bridge the
+                gap between technology and business needs, with hands-on
+                experience in AI/ML projects, Power BI dashboards, and digital
+                marketing campaigns.
+              </p>
+            </div>
+
+            <div class="text-card">
+              <h3 class="card-title">My Mission</h3>
+              <p class="card-text">
+                To leverage cutting-edge technology to solve real-world problems
+                and create meaningful impact through data-driven solutions and
+                user-centered design.
+              </p>
+            </div>
+
+            <div class="about-actions">
+              <button class="btn-primary magnetic-btn">
+                <span class="btn-text">Download CV</span>
+                <i class="fas fa-download btn-icon"></i>
+                <div class="btn-ripple"></div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-32 bg-gray-50 dark:bg-gray-800">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Skills & Expertise</h2>
+          <div class="section-subtitle">Technologies I work with</div>
+        </div>
+
+        <!-- Radial Charts for Main Skills -->
+        <div
+          class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16"
+          aria-label="Main skills as radial charts"
+        >
+          <div class="radial-card group" aria-label="Python proficiency 90%">
+            <div class="radial" data-percentage="90">
+              <span class="radial-label"
+                ><i class="fab fa-python mr-2"></i>90%</span
+              >
+            </div>
+            <div class="radial-title">Python</div>
+            <div class="tooltip">Used in AI/ML projects</div>
+          </div>
+
+          <div
+            class="radial-card group"
+            aria-label="JavaScript proficiency 85%"
+          >
+            <div class="radial" data-percentage="85">
+              <span class="radial-label"
+                ><i class="fab fa-js-square mr-2"></i>85%</span
+              >
+            </div>
+            <div class="radial-title">JavaScript</div>
+            <div class="tooltip">Interactive frontends and animations</div>
+          </div>
+
+          <div class="radial-card group" aria-label="HTML proficiency 95%">
+            <div class="radial" data-percentage="95">
+              <span class="radial-label"
+                ><i class="fab fa-html5 mr-2"></i>95%</span
+              >
+            </div>
+            <div class="radial-title">HTML5</div>
+            <div class="tooltip">Semantic and accessible markup</div>
+          </div>
+
+          <div class="radial-card group" aria-label="CSS proficiency 90%">
+            <div class="radial" data-percentage="90">
+              <span class="radial-label"
+                ><i class="fab fa-css3-alt mr-2"></i>90%</span
+              >
+            </div>
+            <div class="radial-title">CSS3</div>
+            <div class="tooltip">TailwindCSS and modern layouts</div>
+          </div>
+
+          <div class="radial-card group" aria-label="Power BI proficiency 80%">
+            <div class="radial" data-percentage="80">
+              <span class="radial-label"
+                ><i class="fas fa-chart-bar mr-2"></i>80%</span
+              >
+            </div>
+            <div class="radial-title">Power BI</div>
+            <div class="tooltip">Dashboards and KPI tracking</div>
+          </div>
+
+          <div class="radial-card group" aria-label="Canva proficiency 85%">
+            <div class="radial" data-percentage="85">
+              <span class="radial-label"
+                ><i class="fas fa-palette mr-2"></i>85%</span
+              >
+            </div>
+            <div class="radial-title">Canva</div>
+            <div class="tooltip">Branding and content design</div>
+          </div>
+
+          <div class="radial-card group" aria-label="Figma proficiency 75%">
+            <div class="radial" data-percentage="75">
+              <span class="radial-label"
+                ><i class="fab fa-figma mr-2"></i>75%</span
+              >
+            </div>
+            <div class="radial-title">Figma</div>
+            <div class="tooltip">Wireframes and prototyping</div>
+          </div>
+
+          <div
+            class="radial-card group"
+            aria-label="Social Media proficiency 90%"
+          >
+            <div class="radial" data-percentage="90">
+              <span class="radial-label"
+                ><i class="fas fa-bullhorn mr-2"></i>90%</span
+              >
+            </div>
+            <div class="radial-title">Social Media Marketing</div>
+            <div class="tooltip">Campaigns and growth strategy</div>
+          </div>
+        </div>
+
+        <!-- Tools Carousel -->
+        <div class="mb-20" aria-label="Tools carousel">
+          <h3 class="text-xl font-semibold mb-6 text-center">Tools</h3>
+          <div class="swiper tools-swiper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide tool-chip" data-tip="Daily workflow">
+                ChatGPT
+              </div>
+              <div class="swiper-slide tool-chip" data-tip="AI research">
+                Google Gemini
+              </div>
+              <div class="swiper-slide tool-chip" data-tip="Version control">
+                GitHub
+              </div>
+              <div class="swiper-slide tool-chip" data-tip="AI-assisted coding">
+                GitHub Copilot
+              </div>
+              <div class="swiper-slide tool-chip" data-tip="Video generation">
+                Veo 3
+              </div>
+              <div class="swiper-slide tool-chip" data-tip="Creative AI">
+                Kling AI
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="skills-grid">
+          <div class="skill-category">
+            <h3 class="category-title">Programming</h3>
+            <div class="skills-list">
+              <div class="skill-item">
+                <div class="skill-icon">
+                  <i class="fab fa-python"></i>
+                </div>
+                <div class="skill-info">
+                  <span class="skill-name">Python</span>
+                  <div class="skill-bar">
+                    <div class="skill-progress" data-width="90"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="skill-item">
+                <div class="skill-icon">
+                  <i class="fab fa-js-square"></i>
+                </div>
+                <div class="skill-info">
+                  <span class="skill-name">JavaScript</span>
+                  <div class="skill-bar">
+                    <div class="skill-progress" data-width="85"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="skill-item">
+                <div class="skill-icon">
+                  <i class="fab fa-html5"></i>
+                </div>
+                <div class="skill-info">
+                  <span class="skill-name">HTML5</span>
+                  <div class="skill-bar">
+                    <div class="skill-progress" data-width="95"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="skill-item">
+                <div class="skill-icon">
+                  <i class="fab fa-css3-alt"></i>
+                </div>
+                <div class="skill-info">
+                  <span class="skill-name">CSS3</span>
+                  <div class="skill-bar">
+                    <div class="skill-progress" data-width="90"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="skill-category">
+            <h3 class="category-title">Data & Analytics</h3>
+            <div class="skills-list">
+              <div class="skill-item">
+                <div class="skill-icon">
+                  <i class="fas fa-chart-bar"></i>
+                </div>
+                <div class="skill-info">
+                  <span class="skill-name">Power BI</span>
+                  <div class="skill-bar">
+                    <div class="skill-progress" data-width="80"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="skill-item">
+                <div class="skill-icon">
+                  <i class="fas fa-brain"></i>
+                </div>
+                <div class="skill-info">
+                  <span class="skill-name">Machine Learning</span>
+                  <div class="skill-bar">
+                    <div class="skill-progress" data-width="75"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="skill-item">
+                <div class="skill-icon">
+                  <i class="fas fa-database"></i>
+                </div>
+                <div class="skill-info">
+                  <span class="skill-name">Data Analysis</span>
+                  <div class="skill-bar">
+                    <div class="skill-progress" data-width="85"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="skill-category">
+            <h3 class="category-title">Design & Marketing</h3>
+            <div class="skills-list">
+              <div class="skill-item">
+                <div class="skill-icon">
+                  <i class="fas fa-palette"></i>
+                </div>
+                <div class="skill-info">
+                  <span class="skill-name">Canva</span>
+                  <div class="skill-bar">
+                    <div class="skill-progress" data-width="85"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="skill-item">
+                <div class="skill-icon">
+                  <i class="fab fa-figma"></i>
+                </div>
+                <div class="skill-info">
+                  <span class="skill-name">Figma</span>
+                  <div class="skill-bar">
+                    <div class="skill-progress" data-width="75"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="skill-item">
+                <div class="skill-icon">
+                  <i class="fas fa-bullhorn"></i>
+                </div>
+                <div class="skill-info">
+                  <span class="skill-name">Social Media</span>
+                  <div class="skill-bar">
+                    <div class="skill-progress" data-width="90"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-32">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Experience & Education</h2>
+          <div class="section-subtitle">My professional journey</div>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-line"></div>
+
+          <div class="timeline-item" data-icon="graduation-cap">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div
+                class="timeline-card expandable"
+                tabindex="0"
+                aria-expanded="false"
+              >
+                <div class="timeline-header">
+                  <h3 class="timeline-title">BSCS Student</h3>
+                  <span class="timeline-period">2022 - Present</span>
+                </div>
+                <div class="timeline-company">Virtual University</div>
+                <p class="timeline-description">
+                  Pursuing Bachelor's in Computer Science with focus on AI, Data
+                  Analytics, and Frontend Development.
+                </p>
+                <div class="timeline-more hidden">
+                  <ul
+                    class="list-disc list-inside text-gray-600 dark:text-gray-300"
+                  >
+                    <li>Specialized courses in AI/ML and Data Visualization</li>
+                    <li>Built academic projects in web and analytics</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item" data-icon="brain">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div
+                class="timeline-card expandable"
+                tabindex="0"
+                aria-expanded="false"
+              >
+                <div class="timeline-header">
+                  <h3 class="timeline-title">AI/ML Projects</h3>
+                  <span class="timeline-period">2023 - Present</span>
+                </div>
+                <div class="timeline-company">5+ Projects Completed</div>
+                <p class="timeline-description">
+                  Developed various AI and machine learning projects including
+                  predictive models and automation solutions.
+                </p>
+                <div class="timeline-more hidden">
+                  <ul
+                    class="list-disc list-inside text-gray-600 dark:text-gray-300"
+                  >
+                    <li>Time-series forecasting and classification</li>
+                    <li>Automation with Python pipelines</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item" data-icon="chart-line">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div
+                class="timeline-card expandable"
+                tabindex="0"
+                aria-expanded="false"
+              >
+                <div class="timeline-header">
+                  <h3 class="timeline-title">Data Analytics</h3>
+                  <span class="timeline-period">2023 - Present</span>
+                </div>
+                <div class="timeline-company">Power BI Dashboards</div>
+                <p class="timeline-description">
+                  Created interactive dashboards and data visualizations for
+                  business intelligence and decision making.
+                </p>
+                <div class="timeline-more hidden">
+                  <ul
+                    class="list-disc list-inside text-gray-600 dark:text-gray-300"
+                  >
+                    <li>ETL workflows and DAX measures</li>
+                    <li>Stakeholder-ready reporting</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item" data-icon="chalkboard-teacher">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div
+                class="timeline-card expandable"
+                tabindex="0"
+                aria-expanded="false"
+              >
+                <div class="timeline-header">
+                  <h3 class="timeline-title">Training & Mentoring</h3>
+                  <span class="timeline-period">2024 - Present</span>
+                </div>
+                <div class="timeline-company">370+ Students Trained</div>
+                <p class="timeline-description">
+                  Conducted training sessions and mentored students in various
+                  technical and digital marketing skills.
+                </p>
+                <div class="timeline-more hidden">
+                  <ul
+                    class="list-disc list-inside text-gray-600 dark:text-gray-300"
+                  >
+                    <li>Workshops on AI, Data, and Web</li>
+                    <li>Curriculum design and delivery</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-32 bg-gray-50 dark:bg-gray-800">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Featured Projects</h2>
+          <div class="section-subtitle">Some of my recent work</div>
+        </div>
+
+        <!-- Project Filter Tabs -->
+        <div
+          class="project-filters flex flex-wrap justify-center gap-3 mb-10"
+          role="tablist"
+          aria-label="Project filters"
+        >
+          <button
+            class="filter-tab active"
+            data-filter="all"
+            role="tab"
+            aria-selected="true"
+          >
+            All
+          </button>
+          <button
+            class="filter-tab"
+            data-filter="ai"
+            role="tab"
+            aria-selected="false"
+          >
+            AI Projects
+          </button>
+          <button
+            class="filter-tab"
+            data-filter="data"
+            role="tab"
+            aria-selected="false"
+          >
+            Data Analytics
+          </button>
+          <button
+            class="filter-tab"
+            data-filter="branding"
+            role="tab"
+            aria-selected="false"
+          >
+            Branding
+          </button>
+          <button
+            class="filter-tab"
+            data-filter="web"
+            role="tab"
+            aria-selected="false"
+          >
+            Web Development
+          </button>
+        </div>
+
+        <div class="projects-grid">
+          <div class="project-card" data-category="ai">
+            <div class="project-image">
+              <img
+                src="https://via.placeholder.com/600x400/3B82F6/FFFFFF?text=AI+Analytics"
+                alt="AI Analytics Project"
+              />
+              <div class="project-overlay">
+                <div class="project-links">
+                  <a
+                    href="#"
+                    class="project-link"
+                    data-open-project="ai-analytics"
+                  >
+                    <i class="fas fa-external-link-alt"></i>
+                  </a>
+                  <a href="#" class="project-link">
+                    <i class="fab fa-github"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">AI-Powered Analytics Platform</h3>
+              <p class="project-description">
+                Machine learning model for predictive analytics and business
+                intelligence with real-time data processing.
+              </p>
+              <div class="project-tech">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">TensorFlow</span>
+                <span class="tech-tag">Pandas</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card" data-category="data">
+            <div class="project-image">
+              <img
+                src="https://via.placeholder.com/600x400/8B5CF6/FFFFFF?text=Power+BI"
+                alt="Power BI Dashboard"
+              />
+              <div class="project-overlay">
+                <div class="project-links">
+                  <a
+                    href="#"
+                    class="project-link"
+                    data-open-project="bi-dashboard"
+                  >
+                    <i class="fas fa-external-link-alt"></i>
+                  </a>
+                  <a href="#" class="project-link">
+                    <i class="fab fa-github"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">Business Intelligence Dashboard</h3>
+              <p class="project-description">
+                Interactive dashboard for real-time business metrics and KPIs
+                with data integration from multiple sources.
+              </p>
+              <div class="project-tech">
+                <span class="tech-tag">Power BI</span>
+                <span class="tech-tag">DAX</span>
+                <span class="tech-tag">SQL</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card" data-category="web">
+            <div class="project-image">
+              <img
+                src="https://via.placeholder.com/600x400/10B981/FFFFFF?text=E-commerce"
+                alt="E-commerce Platform"
+              />
+              <div class="project-overlay">
+                <div class="project-links">
+                  <a
+                    href="#"
+                    class="project-link"
+                    data-open-project="ecommerce"
+                  >
+                    <i class="fas fa-external-link-alt"></i>
+                  </a>
+                  <a href="#" class="project-link">
+                    <i class="fab fa-github"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">E-commerce Platform</h3>
+              <p class="project-description">
+                Full-stack web application with modern UI/UX design, secure
+                payment processing, and admin panel.
+              </p>
+              <div class="project-tech">
+                <span class="tech-tag">HTML5</span>
+                <span class="tech-tag">CSS3</span>
+                <span class="tech-tag">JavaScript</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certificates Section -->
+    <section id="certificates" class="py-32 bg-gray-50 dark:bg-gray-800">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Certificates</h2>
+          <div class="section-subtitle">Showcase your certifications</div>
+        </div>
+
+        <!-- Static gallery only. Add files to images/certificates/ and list them in certificates.json -->
+
+        <!-- Gallery Grid -->
+        <div id="cert-gallery" class="cert-grid" aria-live="polite">
+          <!-- Items rendered by script.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Certificate Viewer Modal -->
+    <div id="certificate-modal" class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-4">
+      <div class="modal-card bg-white dark:bg-gray-900 rounded-2xl max-w-5xl w-full overflow-hidden">
+        <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+          <h3 id="certificate-modal-title" class="text-xl font-bold">Certificate</h3>
+          <button id="certificate-modal-close" aria-label="Close modal" class="text-gray-500 hover:text-gray-800 dark:hover:text-gray-200">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="p-4">
+          <div class="viewer-area">
+            <img id="certificate-image" class="w-full h-auto rounded-xl hidden" alt="Certificate image" />
+            <iframe id="certificate-pdf" class="w-full aspect-video rounded-xl hidden" title="Certificate PDF" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project Modal -->
+    <div
+      id="project-modal"
+      class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-4"
+    >
+      <div
+        class="modal-card bg-white dark:bg-gray-900 rounded-2xl max-w-4xl w-full overflow-hidden"
+      >
+        <div
+          class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700"
+        >
+          <h3 id="project-modal-title" class="text-xl font-bold">Project</h3>
+          <button
+            id="project-modal-close"
+            aria-label="Close modal"
+            class="text-gray-500 hover:text-gray-800 dark:hover:text-gray-200"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="p-4 space-y-6">
+          <div class="swiper project-swiper rounded-xl overflow-hidden">
+            <div class="swiper-wrapper" id="project-swiper-wrapper">
+              <!-- Slides injected by JS -->
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+          </div>
+          <div class="aspect-video rounded-xl overflow-hidden">
+            <iframe
+              id="project-video"
+              class="w-full h-full"
+              src=""
+              title="Project Demo"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-32">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Get In Touch</h2>
+          <div class="section-subtitle">Let's work together</div>
+        </div>
+
+        <!-- Certificates Section -->
+    <section id="certificates" class="py-16 bg-white dark:bg-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="section-header text-center mb-12">
+                <h2 class="section-title">Certificates</h2>
+                <div class="section-subtitle">Showcase your certifications</div>
+            </div>
+            
+            <!-- Certificates Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="cert-gallery">
+                <!-- Certificates will be loaded here by JavaScript -->
+                <div class="text-center py-8">
+                    <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mx-auto mb-4"></div>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Loading certificates...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Certificate Modal -->
+    <div id="certificate-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-4xl w-full mx-4 max-h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-700">
+                <h3 id="certificate-modal-title" class="text-lg font-semibold">Certificate</h3>
+                <button id="certificate-modal-close" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <div class="p-4 overflow-auto flex-grow">
+                <img id="certificate-image" src="" alt="Certificate" class="hidden w-full h-auto max-h-[70vh] object-contain mx-auto">
+                <iframe id="certificate-pdf" src="" class="hidden w-full h-[70vh] border-0"></iframe>
+            </div>
+        </div>
+    </div>
+
+            <div class="contact-card">
+              <div class="contact-icon">
+                <i class="fas fa-phone"></i>
+              </div>
+{{ ... }}
+                <h3 class="contact-title">Phone</h3>
+                <p class="contact-text">0318-0977696</p>
+              </div>
+            </div>
+
+            <div class="contact-card">
+              <div class="contact-icon">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div class="contact-details">
+                <h3 class="contact-title">Location</h3>
+                <p class="contact-text">Islamabad</p>
+              </div>
+            </div>
+
+            <div class="social-links">
+              <a
+                href="https://www.linkedin.com/in/abdul-hannan-828416327"
+                target="_blank"
+                class="social-link magnetic-btn"
+                title="LinkedIn"
+              >
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a
+                href="https://www.instagram.com/hannan_activites?igsh=eXQ4Y3M0ZDh0YXZ0&utm_source=qr"
+                target="_blank"
+                class="social-link magnetic-btn"
+                title="Instagram"
+              >
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a
+                href="https://www.facebook.com/profile.php?id=61572218363272&mibextid=wwXIfr"
+                target="_blank"
+                class="social-link magnetic-btn"
+                title="Facebook"
+              >
+                <i class="fab fa-facebook"></i>
+              </a>
+              <a
+                href="https://github.com/hannanraja401"
+                target="_blank"
+                class="social-link magnetic-btn"
+                title="GitHub"
+              >
+                <i class="fab fa-github"></i>
+              </a>
+              <a
+                href="mailto:hannanraja401@gmail.com"
+                class="social-link magnetic-btn"
+              >
+                <i class="fas fa-envelope"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="contact-form-container">
+            <form id="contact-form" class="contact-form">
+              <div class="form-group">
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  class="form-input"
+                />
+                <label for="name" class="form-label">Name</label>
+              </div>
+
+              <div class="form-group">
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  class="form-input"
+                />
+                <label for="email" class="form-label">Email</label>
+              </div>
+
+              <div class="form-group">
+                <input
+                  type="text"
+                  id="subject"
+                  name="subject"
+                  required
+                  class="form-input"
+                />
+                <label for="subject" class="form-label">Subject</label>
+              </div>
+
+              <div class="form-group">
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="5"
+                  required
+                  class="form-input"
+                ></textarea>
+                <label for="message" class="form-label">Message</label>
+              </div>
+
+              <button type="submit" class="btn-primary magnetic-btn">
+                <span class="btn-text">Send Message</span>
+                <div class="btn-ripple"></div>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-text">
+            <p>&copy; 2024 Abdul Hannan. All rights reserved.</p>
+          </div>
+          <div class="footer-links">
+            <a href="#home" class="footer-link">Back to Top</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Lottie Animations -->
+    <div
+      id="lottie-container"
+      class="fixed inset-0 pointer-events-none z-30"
+    ></div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+  </body>
+</html>
